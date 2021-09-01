@@ -6,6 +6,7 @@ import discord
 from random import choice
 import playlist_service
 import logging
+from typing import Dict, Callable, List
 
 
 COMMAND_PREFIX = '$'
@@ -82,8 +83,8 @@ async def play_playlist(message: discord.Message, args):
     await message.channel.send('Not implemented yet.')
     logging.info(f'{message.author} played a playlist: {playlist}')
 
-
-COMMANDS = {
+CommandHandler = Callable[[discord.Message, List[str]]]
+COMMANDS: Dict[str, CommandHandler] = {
     'ping': ping,
     'echo': echo,
     'playlists': list_playlists,

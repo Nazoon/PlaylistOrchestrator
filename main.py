@@ -41,5 +41,5 @@ async def on_message(message: discord.Message):
 
 if __name__ == '__main__':
     logger = logging
-    logger.basicConfig(format='%(asctime)s - %(levelname)s[%(name)s] - %(message)s', level=logging.INFO)
+    logger.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
     client.run(bot_token)
