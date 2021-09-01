@@ -32,9 +32,8 @@ async def add_playlist(message: discord.Message, args):
         await message.channel.send(f'Usage: {COMMAND_PREFIX}{args[0]} <Playlist Name> <Criteria>')
         return
     cmd, name, criteria = args
-    playlist = playlist_service.get_playlist(name)
-    action = 'Updated' if playlist is not None else 'Added'
-    playlist_service.Playlist(name=name, link=criteria).save_to_db()
+    updated = playlist_service.Playlist(name=name, link=criteria).save_to_db()
+    action = 'Updated' if updated else 'Added'
     await message.channel.send(f'{action} playlist {name}.')
     logging.info(f'{message.author} {action.lower()} a playlist: {name} ({criteria})')
 
