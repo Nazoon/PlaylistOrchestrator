@@ -35,15 +35,18 @@ class Playlist:
     def __str__(self):
         return repr(self)
 
-    def save_to_db(self):
+    def save_to_db(self) -> bool:
         """
-        Insert or update database to include this Playlist.
+        Insert or update database to include this Playlist. Return value indicates whether or not a document existed
+        which represented this Playlist. i.e. Return True if a document was updated, False if a document was inserted.
         """
         p = get_playlist(self.name)
         if p is None:
             _playlists_collection.insert_one(self._to_dict())
+            return False
         else:
             _playlists_collection.update_one({'name': self.name}, {'$set': self._to_dict()})
+            return True
 
 
 def _resolve_id(playlist: Playlist) -> str:
