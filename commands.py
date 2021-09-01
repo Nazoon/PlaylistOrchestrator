@@ -83,7 +83,7 @@ async def play_playlist(message: discord.Message, args):
     await message.channel.send('Not implemented yet.')
     logging.info(f'{message.author} played a playlist: {playlist}')
 
-CommandHandler = Callable[[discord.Message, List[str]]]
+CommandHandler = Callable[[discord.Message, List[str]], None]
 COMMANDS: Dict[str, CommandHandler] = {
     'ping': ping,
     'echo': echo,
