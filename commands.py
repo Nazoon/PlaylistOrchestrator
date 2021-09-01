@@ -5,6 +5,7 @@ Defines this bot's commands.
 import discord
 from random import choice
 import playlist_service
+import logging
 
 
 COMMAND_PREFIX = '$'
@@ -20,7 +21,6 @@ async def echo(message: discord.Message, args):
 
 async def list_playlists(message: discord.Message, _):
     playlists = playlist_service.get_all_playlists()
-    print(playlists)
     if playlists == []:
         await message.channel.send('No playlists currently stored.')
     else:
@@ -36,6 +36,7 @@ async def add_playlist(message: discord.Message, args):
     action = 'Updated' if playlist is not None else 'Added'
     playlist_service.Playlist(name=name, link=criteria).save_to_db()
     await message.channel.send(f'{action} playlist {name}.')
+    logging.info(f'{message.author} {action.lower()} a playlist: {name} ({criteria})')
 
 
 async def del_playlist(message: discord.Message, args):
@@ -48,6 +49,7 @@ async def del_playlist(message: discord.Message, args):
         await message.channel.send(f'Playlist {playlist_name} does not exist. No action taken.')
     else:
         await message.channel.send(f'Playlist {playlist_name} deleted.')
+        logging.info(f'Playlist {playlist_name} deleted by user {message.author}')
 
 
 CONDEMNATIONS = [
@@ -65,6 +67,7 @@ async def delete_all(message: discord.Message, _):
         obituary = 'No playlists to delete.'
     else:
         obituary = f':boom: Deleted {num_deleted} playlists. ' + choice(CONDEMNATIONS)
+        logging.info(f'{message.author} deleted all playlists.')
     await message.channel.send(obituary)
 
 
@@ -77,7 +80,8 @@ async def play_playlist(message: discord.Message, args):
     if playlist is None:
         await message.channel.send(f'I couldn\'t find a playlist named {name}.')
         return
-    await message.channel.send(playlist)
+    await message.channel.send('Not implemented yet.')
+    logging.info(f'{message.author} played a playlist: {playlist}')
 
 
 COMMANDS = {

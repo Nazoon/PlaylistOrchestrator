@@ -6,6 +6,7 @@ import os
 import discord
 import shlex
 from commands import COMMANDS, COMMAND_PREFIX
+import logging
 
 
 client = discord.Client()
@@ -24,7 +25,7 @@ def parse_command_args(message: discord.Message) -> list:
 
 @client.event
 async def on_ready():
-    print(f'I am logged in as {client.user}')
+    logging.info(f'I am logged in as {client.user}')
 
 
 @client.event
@@ -39,4 +40,6 @@ async def on_message(message: discord.Message):
 
 
 if __name__ == '__main__':
+    logger = logging
+    logger.basicConfig(format='%(asctime)s - %(levelname)s[%(name)s] - %(message)s', level='INFO')
     client.run(bot_token)
